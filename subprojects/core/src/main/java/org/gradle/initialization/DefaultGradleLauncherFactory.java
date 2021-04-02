@@ -147,6 +147,18 @@ public class DefaultGradleLauncherFactory implements GradleLauncherFactory {
         }
 
         DeprecationLogger.init(usageLocationReporter, startParameter.getWarningMode(), serviceRegistry.get(BuildOperationProgressEventEmitter.class));
+        if (startParameter.getSettingsFile() != null) {
+            DeprecationLogger.deprecateAction("Specifying custom settings file via command line")
+                .willBeRemovedInGradle8()
+                .withUpgradeGuideSection(7, "configuring_build_layout_cli")
+                .nagUser();
+        }
+        if (startParameter.getBuildFile() != null) {
+            DeprecationLogger.deprecateAction("Specifying custom build file via command line")
+                .willBeRemovedInGradle8()
+                .withUpgradeGuideSection(7, "configuring_build_layout_cli")
+                .nagUser();
+        }
 
         GradleInternal parentBuild = parent == null ? null : parent.getGradle();
 
